@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Models;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +12,6 @@ class Role extends Model
 
     public function permissions()
     {
-    	return $this->belongsToMany('App\Models\Models\Permission');
+    	return $this->belongsToMany('App\Models\Permission');
     }
 }

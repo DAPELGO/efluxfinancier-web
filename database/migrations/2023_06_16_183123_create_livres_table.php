@@ -15,6 +15,7 @@ class CreateLivresTable extends Migration
     {
         Schema::create('livres', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('exercice_id')->default(0);
             $table->bigInteger('livre_id')->default(0);
             $table->date('date_evenement')->nullable();
             $table->string('num_enregistrement')->nullable();

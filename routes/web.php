@@ -17,28 +17,25 @@ use App\Http\Controllers\Auth\LoginController;
 Route::get('/acceuil', 'HomeController@index')->name('app.home');
 Route::get('/', [LoginController::class, 'userLogin'])->name('user.login');
 
+// Livres
+Route::resource('livres', 'LivreController');
+// Creance-dettes
+Route::resource('creance-dettes', 'CreanceDetteController');
+// Paiements
+Route::resource('paiements', 'PaiementController');
+// Structures
+Route::resource('structures', 'StructureController');
+// Users
+Route::resource('users', 'UserController');
+// Roles
+Route::resource('roles', 'RoleController');
+// Permissions
+Route::resource('permissions', 'PermissionController');
 // Parametres
 Route::resource('parametres', 'ParametreController');
 // Valeurs
 Route::resource('valeurs', 'ValeurController');
-// Comptes
-Route::resource('comptes', 'CompteController');
-// DetailTransactions
-Route::resource('detailTransactions', 'DetailTransactionController');
-// Livres
-Route::resource('livres', 'LivreController');
-// Structures
-Route::resource('structures', 'StructureController');
-// Transactions
-Route::resource('Transactions', 'TransactionController');
-// Users
-Route::resource('users', 'UserController');
-// Users
-Route::resource('users', 'UserController');
-// Permissions
-Route::resource('permissions', 'PermissionController');
-// Roles
-Route::resource('roles', 'RoleController');
+
 
 Auth::routes();
 

@@ -16,7 +16,7 @@ class CreateSoldesTable extends Migration
         Schema::create('soldes', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('structure_id')->default(0);
-            $table->bigInteger('operation_id')->default(0);
+            $table->bigInteger('livre_id')->default(0);
             $table->double('solde_caisse')->default(0);
             $table->double('solde_banque')->default(0);
             $table->bigInteger('id_user_created')->default(0);

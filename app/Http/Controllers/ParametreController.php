@@ -26,8 +26,12 @@ class ParametreController extends Controller
      */
     public function index()
     {
-        $parametres = Parametre::where('is_delete', false)->get();
-        return view('parametres.index', compact('parametres'));
+        if (Auth::user()->can('parametres.view')) {
+            $parametres = Parametre::where('is_delete', false)->get();
+            return view('parametres.index', compact('parametres'));
+        }else{
+            return redirect()->route('app.home');
+        }
     }
 
     /**
@@ -37,8 +41,12 @@ class ParametreController extends Controller
      */
     public function create()
     {
-        $parametres = Parametre::where('is_delete', false)->get();
-        return view('parametres.create', compact('parametres'));
+        if (Auth::user()->can('parametres.create')) {
+            $parametres = Parametre::where('is_delete', false)->get();
+            return view('parametres.create', compact('parametres'));
+        }else{
+            return redirect()->route('app.home');
+        }
     }
 
     /**
@@ -49,20 +57,24 @@ class ParametreController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'nom_parametre'=>'required',
-        ]);
+        if (Auth::user()->can('parametres.create')) {
+            $this->validate($request, [
+                'nom_parametre'=>'required',
+            ]);
 
-        $parent_id = 0;
-        if($request->paraent_id != NULL){
-            $parent_id = $request->paraent_id;
+            $parent_id = 0;
+            if($request->paraent_id != NULL){
+                $parent_id = $request->paraent_id;
+            }
+            parametre::create([
+                'parent_id'=>$parent_id,
+                'libelle'=>$request->nom_parametre,
+            ]);
+
+            return redirect()->route('parametres.index');
+        }else{
+            return redirect()->route('app.home');
         }
-        parametre::create([
-            'parent_id'=>$parent_id,
-            'libelle'=>$request->nom_parametre,
-        ]);
-
-        return redirect()->route('parametres.index');
     }
 
     /**

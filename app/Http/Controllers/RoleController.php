@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Models\Role;
-use App\Models\Models\Permission;
+use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +17,7 @@ class RoleController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        // $this->middleware('auth:admin');
     }
 
     /**
@@ -27,12 +27,12 @@ class RoleController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->can('roles.view')) {
+        if (Auth::user()->can('role.view')) {
             $roles = Role::where('is_delete', FALSE)->get();
-            return view('backend.roles.index', compact('roles'));
+            return view('roles.index', compact('roles'));
+        }else{
+            return redirect()->route('app.home');
         }
-
-        return redirect(route('backend.home'));
     }
 
     /**
@@ -42,13 +42,12 @@ class RoleController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->can('roles.create')) {
-
+        if (Auth::user()->can('role.create')) {
             $permissions =  Permission::where('is_delete', FALSE)->get();
-            return view('backend.roles.create', compact('permissions'));
+            return view('roles.create', compact('permissions'));
+        }else{
+            return redirect()->route('app.home');
         }
-
-        return redirect(route('backend.home'));
     }
 
     /**
@@ -59,8 +58,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->can('roles.create')) {
-
+        if (Auth::user()->can('role.create')) {
             $this->validate($request, [
                 'nom_role' => 'required|unique:roles',
                 'permission' => 'required',
@@ -69,7 +67,6 @@ class RoleController extends Controller
             $role = Role::create([
                 'nom_role' => $request->nom_role,
                 'is_delete' => FALSE,
-                'id_user_created'=>Auth::user()->id,
             ]);
 
             $role->permissions()->sync($request->permission);
@@ -79,9 +76,9 @@ class RoleController extends Controller
             session()->flash('notification.title', 'Succès');
 
             return redirect()->route('roles.index');
+        }else{
+            return redirect()->route('app.home');
         }
-
-        return redirect(route('backend.home'));
     }
 
     /**

@@ -1,19 +1,19 @@
 @extends('layouts.template')
-@section('page_title', 'ECOM | All valeur')
-@section('valeur', 'active')
+@section('page_title', 'ECOM | All role')
+@section('role', 'active')
 @section('content')
 <nav class="mb-2" aria-label="breadcrumb">
     <ol class="breadcrumb mb-0">
       <li class="breadcrumb-item"><a href="{{ route('app.home') }}">Page</a></li>
-      <li class="breadcrumb-item active">Valeurs</li>
+      <li class="breadcrumb-item active">roles</li>
     </ol>
   </nav>
-  <div id="categories" data-list='{"valueNames":["id","valeur_name","subvaleur_count","product_count","last_active","slug"],"page":10,"pagination":true}'>
+  <div id="categories" data-list='{"valueNames":["id","role_name","subrole_count","product_count","last_active","slug"],"page":10,"pagination":true}'>
     <div class="row align-items-center justify-content-between g-3 mb-4">
       <div class="col col-auto">
         <div class="search-box">
           <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
-            <input class="form-control search-input search" type="search" placeholder="Rechercher un valeur" aria-label="Search" />
+            <input class="form-control search-input search" type="search" placeholder="Rechercher un role" aria-label="Search" />
             <span class="fas fa-search search-box-icon"></span>
 
           </form>
@@ -22,7 +22,7 @@
       <div class="col-auto">
         <div class="d-flex align-items-center">
           <button class="btn btn-link text-900 me-4 px-0"><span class="fa-solid fa-file-export fs--1 me-2"></span>Export</button>
-          <a href="{{ route('valeurs.create') }}" class="btn btn-outline-primary btn-sm"><span class="fas fa-plus me-2"></span>Ajouter une valeur</a>
+          <a href="{{ route('roles.create') }}" class="btn btn-outline-primary btn-sm"><span class="fas fa-plus me-2"></span>Ajouter un role</a>
         </div>
       </div>
     </div>
@@ -37,25 +37,25 @@
                 </div>
               </th>
               <th class="sort align-middle" scope="col" data-sort="id" style="min-width:10px;">ID</th>
-              <th class="sort align-middle" scope="col" data-sort="valeur_name" style="min-width:200px;">Paramètre</th>
-              <th class="sort align-middle" scope="col" data-sort="valeur_name" style="min-width:200px;">Valeur</th>
+              <th class="sort align-middle" scope="col" data-sort="role_name" style="min-width:200px;">Paramètre</th>
+              <th class="sort align-middle" scope="col" data-sort="role_name" style="min-width:200px;">Date création</th>
               <th class="sort align-middle" scope="col" data-sort="last_active" style="min-width:200px;">ACTIONS</th>
             </tr>
           </thead>
           <tbody class="list" id="categories-table-body">
-            @foreach($valeurs as $valeur)
+            @foreach($roles as $role)
             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
               <td class="fs--1 align-middle ps-0 py-3">
                 <div class="form-check mb-0 fs-0">
-                    <input class="form-check-input" type="checkbox" name="valeur[]" id="{{ $valeur->id }}" data-bulk-select-row='{}' />
+                    <input class="form-check-input" type="checkbox" name="role[]" id="{{ $role->id }}" data-bulk-select-row='{}' />
                 </div>
               </td>
-              <td class="id align-middle white-space-nowrap">{{ $valeur->id }}</td>
-              <td class="valeur_name align-middle white-space-nowrap align-center">{{ $valeur->libelle_parametre }}</td>
-              <td class="valeur_name align-middle white-space-nowrap align-center"><a class="fw-semi-bold" href="{{ route('valeurs.edit', $valeur->id) }}">{{ $valeur->libelle }}</a></td>
+              <td class="id align-middle white-space-nowrap">{{ $role->id }}</td>
+              <td class="role_name align-middle white-space-nowrap align-center">{{ $role->libelle }}</td>
+              <td class="role_name align-middle white-space-nowrap align-center"><a class="fw-semi-bold" href="{{ route('roles.edit', $role->id) }}">{{ $role->nom_role }}</a></td>
               <td class="last_active align-middle white-space-nowrap text-700">
-                <a href="{{ route('valeurs.edit', $valeur->id) }}" class="btn btn-soft-primary btn-sm btn-actions"><span class="text-900 fs-3" data-feather="edit"></span></a>
-                <a href="{{ route('valeurs.show', $valeur->id) }}" class="btn btn-soft-danger btn-sm btn-actions"><span class="text-900 fs-3" data-feather="trash-2"></span></a>
+                <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-soft-primary btn-sm btn-actions"><span class="text-900 fs-3" data-feather="edit"></span></a>
+                <a href="{{ route('roles.show', $role->id) }}" class="btn btn-soft-danger btn-sm btn-actions"><span class="text-900 fs-3" data-feather="trash-2"></span></a>
               </td>
             </tr>
             @endforeach

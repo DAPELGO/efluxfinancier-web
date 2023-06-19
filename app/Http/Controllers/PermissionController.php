@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Models\Permission;
+use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +16,7 @@ class PermissionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        // $this->middleware('auth:admin');
     }
 
     /**
@@ -28,9 +28,9 @@ class PermissionController extends Controller
     {
         if (Auth::user()->can('permissions.view')) {
             $permissions = Permission::where('is_delete', false)->get();
-            return view('backend.permissions.index', compact('permissions'));
+            return view('permissions.index', compact('permissions'));
         }else{
-            return redirect()->route('backend.home');
+            return redirect()->route('app.home');
         }
     }
 
@@ -41,10 +41,10 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->can('permissions.view')) {
-            return view('backend.permissions.create');
+        if (Auth::user()->can('permissions.create')) {
+            return view('permissions.create');
         }else{
-            return redirect()->route('backend.home');
+            return redirect()->route('app.home');
         }
     }
 
@@ -56,7 +56,7 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->can('permissions.view')) {
+        if (Auth::user()->can('permissions.create')) {
             $this->validate($request, [
                 'nom_permission'=>'required',
             ]);
@@ -67,7 +67,7 @@ class PermissionController extends Controller
 
             return redirect()->route('permissions.index');
         }else{
-            return redirect()->route('backend.home');
+            return redirect()->route('app.home');
         }
     }
 
@@ -86,7 +86,7 @@ class PermissionController extends Controller
                                 ->select('roles.*')
                                 ->where('permission_role.permission_id', $id)
                                 ->get();
-            return view('backend.permissions.show', compact('permission', 'roles'));
+            return view('permissions.show', compact('permission', 'roles'));
         }else{
             return redirect()->route('backend.home');
         }

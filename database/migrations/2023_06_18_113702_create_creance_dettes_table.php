@@ -15,6 +15,7 @@ class CreateCreanceDettesTable extends Migration
     {
         Schema::create('creance_dettes', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('exercice_id')->default(0);
             $table->bigInteger('structure_id')->default(0);
             $table->date('date_reception_facture')->nullable();
             $table->string('num_facture')->nullable();
