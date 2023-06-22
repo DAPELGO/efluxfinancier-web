@@ -20,7 +20,7 @@ Route::get('/', [LoginController::class, 'userLogin'])->name('user.login');
 // Livres
 Route::resource('livres', 'LivreController');
 // Creance-dettes
-Route::resource('creance-dettes', 'CreanceDetteController');
+Route::resource('creancedettes', 'CreanceDetteController');
 // Paiements
 Route::resource('paiements', 'PaiementController');
 // Structures
@@ -35,6 +35,16 @@ Route::resource('permissions', 'PermissionController');
 Route::resource('parametres', 'ParametreController');
 // Valeurs
 Route::resource('valeurs', 'ValeurController');
+// Exercices
+Route::resource('exercices', 'ExerciceController');
+
+// Selection
+Route::get('/selection', 'HomeController@selection')->name('root.selection');
+
+// Payment creante - dette
+Route::get('/creancedette/{id}', 'CreanceDetteController@payment')->name('creancedette.payment');
+// Payment creante - dette
+Route::post('/creancedette/{id}', 'CreanceDetteController@payer')->name('creancedette.payer');
 
 
 Auth::routes();

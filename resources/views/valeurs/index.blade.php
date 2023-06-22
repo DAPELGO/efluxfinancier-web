@@ -2,12 +2,10 @@
 @section('page_title', 'ECOM | All valeur')
 @section('valeur', 'active')
 @section('content')
-<nav class="mb-2" aria-label="breadcrumb">
-    <ol class="breadcrumb mb-0">
-      <li class="breadcrumb-item"><a href="{{ route('app.home') }}">Page</a></li>
-      <li class="breadcrumb-item active">Valeurs</li>
-    </ol>
-  </nav>
+<div class="mb-2 mt-1">
+    <h4 style="padding: 0.4rem 0 0.4rem 1rem; background-color: #004ebc; color: white !important; font-size: 0.8rem;">LES VALEURS</h4>
+    <p class="text-700">Liste des valeurs</p>
+</div>
   <div id="categories" data-list='{"valueNames":["id","valeur_name","subvaleur_count","product_count","last_active","slug"],"page":10,"pagination":true}'>
     <div class="row align-items-center justify-content-between g-3 mb-4">
       <div class="col col-auto">
@@ -28,17 +26,17 @@
     </div>
     <div class="mx-n4 mx-lg-n6 px-4 px-lg-6 mb-9 bg-white border-y border-300 mt-2 position-relative top-1">
       <div class="table-responsive scrollbar ms-n1 ps-1">
-        <table class="table table-sm fs--1 mb-0">
+        <table class="table table-sm mb-0" style="font-size: 0.72rem;">
           <thead>
             <tr>
-              <th class="white-space-nowrap fs--1 align-middle ps-0">
+              <th class="white-space-nowrap align-middle ps-0">
                 <div class="form-check mb-0 fs-0">
                   <input class="form-check-input" id="checkbox-bulk-categories-select" type="checkbox" data-bulk-select='{"body":"categories-table-body"}' />
                 </div>
               </th>
               <th class="sort align-middle" scope="col" data-sort="id" style="min-width:10px;">ID</th>
-              <th class="sort align-middle" scope="col" data-sort="valeur_name" style="min-width:200px;">Paramètre</th>
-              <th class="sort align-middle" scope="col" data-sort="valeur_name" style="min-width:200px;">Valeur</th>
+              <th class="sort align-middle" scope="col" data-sort="valeur_name" style="min-width:200px;">PARAMÈTRE</th>
+              <th class="sort align-middle" scope="col" data-sort="valeur_name" style="min-width:200px;">VALEUR</th>
               <th class="sort align-middle" scope="col" data-sort="last_active" style="min-width:200px;">ACTIONS</th>
             </tr>
           </thead>
@@ -50,9 +48,9 @@
                     <input class="form-check-input" type="checkbox" name="valeur[]" id="{{ $valeur->id }}" data-bulk-select-row='{}' />
                 </div>
               </td>
-              <td class="id align-middle white-space-nowrap">{{ $valeur->id }}</td>
-              <td class="valeur_name align-middle white-space-nowrap align-center">{{ $valeur->libelle_parametre }}</td>
-              <td class="valeur_name align-middle white-space-nowrap align-center"><a class="fw-semi-bold" href="{{ route('valeurs.edit', $valeur->id) }}">{{ $valeur->libelle }}</a></td>
+              <td class="id align-middle white-space-nowrap fw-bold">{{ $valeur->id }}</td>
+              <td class="valeur_name align-middle white-space-nowrap fw-bold">{{ $valeur->libelle_parametre }}</td>
+              <td class="valeur_name align-middle white-space-nowrap"><a class="fw-bold" href="{{ route('valeurs.edit', $valeur->id) }}">{{ $valeur->libelle }}</a></td>
               <td class="last_active align-middle white-space-nowrap text-700">
                 <a href="{{ route('valeurs.edit', $valeur->id) }}" class="btn btn-soft-primary btn-sm btn-actions"><span class="text-900 fs-3" data-feather="edit"></span></a>
                 <a href="{{ route('valeurs.show', $valeur->id) }}" class="btn btn-soft-danger btn-sm btn-actions"><span class="text-900 fs-3" data-feather="trash-2"></span></a>

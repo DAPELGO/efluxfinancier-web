@@ -1,11 +1,11 @@
 @extends('layouts.template')
-@section('page_title', 'ECOM | All parametre')
-@section('setting', 'active')
+@section('page_title', 'ECOM | All exercice')
+@section('exercice', 'active')
 @section('content')
 <div class="mb-3 mt-1">
-    <h4 style="padding: 0.4rem 0 0.4rem 1rem; background-color: #004ebc; color: white !important; font-size: 0.8rem;">DONNÉES DE PARAMÈTRE</h4>
+    <h4 style="padding: 0.4rem 0 0.4rem 1rem; background-color: #004ebc; color: white !important; font-size: 0.8rem;">LES EXERCICES</h4>
 </div>
-  <div id="categories" data-list='{"valueNames":["id","parametre_name","subparametre_count","product_count","last_active","slug"],"page":10,"pagination":true}'>
+  <div id="categories" data-list='{"valueNames":["id","exercice_name","subexercice_count","product_count","last_active","slug"],"page":10,"pagination":true}'>
     <div class="row align-items-center justify-content-between g-3 mb-4">
       <div class="col col-auto">
         <div class="search-box">
@@ -19,13 +19,13 @@
       <div class="col-auto">
         <div class="d-flex align-items-center">
           <button class="btn btn-link text-900 me-4 px-0"><span class="fa-solid fa-file-export fs--1 me-2"></span>Export</button>
-          <a href="{{ route('parametres.create') }}" class="btn btn-outline-primary btn-sm" style="font-weight: 500;"><span class="fas fa-plus me-2"></span>Ajouter un paramètre</a>
+          <a href="{{ route('exercices.create') }}" class="btn btn-outline-primary btn-sm" style="font-weight: 600;"><span class="fas fa-plus me-2"></span>Ajouter une exercice</a>
         </div>
       </div>
     </div>
     <div class="mx-n4 mx-lg-n6 px-4 px-lg-6 mb-9 bg-white border-y border-300 mt-2 position-relative top-1">
       <div class="table-responsive scrollbar ms-n1 ps-1">
-        <table class="table table-sm mb-0" style="font-size: 0.72rem !important;">
+        <table class="table table-sm mb-0 p-1 text-700" style="font-size: .72rem;">
           <thead>
             <tr>
               <th class="white-space-nowrap fs--1 align-middle ps-0">
@@ -34,25 +34,27 @@
                 </div>
               </th>
               <th class="sort align-middle" scope="col" data-sort="id" style="min-width:10px; color: #004ebc;">ID</th>
-              <th class="sort align-middle" scope="col" data-sort="parametre_name" style="color: #004ebc;">PARAMÈTRE</th>
-              <th class="sort align-middle" scope="col" data-sort="parametre_name" style="color: #004ebc;">DATE CRÉATION</th>
+              <th class="sort align-middle" scope="col" data-sort="exercice_name" style="color: #004ebc;">EXERCICE</th>
+              <th class="sort align-middle" scope="col" data-sort="exercice_name" style="color: #004ebc;">DATE DÉBUT</th>
+              <th class="sort align-middle" scope="col" data-sort="exercice_name" style="color: #004ebc;">DATE FIN</th>
               <th class="sort align-middle" scope="col" data-sort="last_active" style="color: #004ebc;">ACTIONS</th>
             </tr>
           </thead>
           <tbody class="list" id="categories-table-body">
-            @foreach($parametres as $parametre)
+            @foreach($exercices as $exercice)
             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
               <td class="fs--1 align-middle ps-0 py-3">
                 <div class="form-check mb-0 fs-0">
-                    <input class="form-check-input" type="checkbox" name="parametre[]" id="{{ $parametre->id }}" data-bulk-select-row='{}' />
+                    <input class="form-check-input" type="checkbox" name="exercice[]" id="{{ $exercice->id }}" data-bulk-select-row='{}' />
                 </div>
               </td>
-              <td class="id align-middle white-space-nowrap fw-bold">{{ $parametre->id }}</td>
-              <td class="parametre_name align-middle white-space-nowrap fw-bold"><a class="fw-bold" href="{{ route('parametres.edit', $parametre->id) }}">{{ $parametre->libelle }}</a></td>
-              <td class="parametre_name align-middle white-space-nowrap">{{ $parametre->created_at }}</td>
+              <td class="id align-middle white-space-nowrap fw-bold text-td">{{ $exercice->id }}</td>
+              <td class="exercice_name align-middle white-space-nowrap text-td"><a class="fw-bold" href="{{ route('exercices.edit', $exercice->id) }}">{{ $exercice->libelle }}</a></td>
+              <td class="exercice_name align-middle white-space-nowrap text-td fw-bold">{{ $exercice->date_debut }}</td>
+              <td class="exercice_name align-middle white-space-nowrap text-td fw-bold">{{ $exercice->date_fin }}</td>
               <td class="last_active align-middle white-space-nowrap text-700">
-                <a href="{{ route('parametres.edit', $parametre->id) }}" class="btn btn-soft-primary btn-sm btn-actions"><span class="text-900 fs-3" data-feather="edit"></span></a>
-                <a href="{{ route('parametres.show', $parametre->id) }}" class="btn btn-soft-danger btn-sm btn-actions"><span class="text-900 fs-3" data-feather="trash-2"></span></a>
+                <a href="{{ route('exercices.edit', $exercice->id) }}" class="btn btn-soft-primary btn-sm btn-actions"><span class="text-900 fs-3" data-feather="edit"></span></a>
+                <a href="{{ route('exercices.show', $exercice->id) }}" class="btn btn-soft-danger btn-sm btn-actions"><span class="text-900 fs-3" data-feather="trash-2"></span></a>
               </td>
             </tr>
             @endforeach
@@ -61,7 +63,7 @@
       </div>
       <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
         <div class="col-auto d-flex">
-          <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="data-list-info"></p><a class="fw-semi-bold" href="#!" data-list-view="*">Tous les paramètres<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a class="fw-semi-bold d-none" href="#!" data-list-view="less">View Less<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+          <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="data-list-info"></p><a class="fw-semi-bold" href="#!" data-list-view="*">Tous les exercices<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a class="fw-semi-bold d-none" href="#!" data-list-view="less">View Less<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
         </div>
         <div class="col-auto d-flex">
           <button class="page-link" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>

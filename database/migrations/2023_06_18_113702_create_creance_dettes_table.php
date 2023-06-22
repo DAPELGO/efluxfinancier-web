@@ -20,6 +20,7 @@ class CreateCreanceDettesTable extends Migration
             $table->date('date_reception_facture')->nullable();
             $table->string('num_facture')->nullable();
             $table->bigInteger('id_type_creancedette')->default(0);
+            $table->string('type_creancedette')->nullable();
             $table->string('nom_creancier_debiteur')->nullable();
             $table->string('libelle_creance_dette')->nullable();
             $table->double('montant_creance_dette')->default(0);

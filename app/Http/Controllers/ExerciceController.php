@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Permission;
+use App\Models\Exercice;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class PermissionController extends Controller
+class ExerciceController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,9 +26,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->can('permissions.view')) {
-            $permissions = Permission::where('is_delete', false)->get();
-            return view('permissions.index', compact('permissions'));
+        if (Auth::user()->can('exercices.view')) {
+            $exercices = Exercice::where('is_delete', false)->get();
+            return view('exercices.index', compact('exercices'));
         }else{
             return redirect()->route('app.home');
         }
@@ -41,8 +41,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->can('permissions.create')) {
-            return view('permissions.create');
+        if (Auth::user()->can('exercices.create')) {
+            return view('exercices.create');
         }else{
             return redirect()->route('app.home');
         }
@@ -56,16 +56,20 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->can('permissions.create')) {
+        if (Auth::user()->can('exercices.create')) {
             $this->validate($request, [
-                'nom_permission'=>'required',
+                'libelle'=>'required',
+                'date_debut'=>'required',
+                'date_fin'=>'required',
             ]);
 
-            Permission::create([
-                'nom_permission'=>$request->nom_permission,
+            exercice::create([
+                'libelle'=>$request->libelle,
+                'date_debut'=>$request->date_debut,
+                'date_fin'=>$request->date_fin,
             ]);
 
-            return redirect()->route('permissions.index');
+            return redirect()->route('exercices.index');
         }else{
             return redirect()->route('app.home');
         }
@@ -79,14 +83,14 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        if (Auth::user()->can('permissions.view')) {
-            $permission = Permission::where('id', $id)->first();
+        if (Auth::user()->can('exercices.view')) {
+            $exercice = Exercice::where('id', $id)->first();
             $roles = DB::table('roles')
-                                ->join('permission_role', 'roles.id', 'permission_role.role_id')
+                                ->join('exercice_role', 'roles.id', 'exercice_role.role_id')
                                 ->select('roles.*')
-                                ->where('permission_role.permission_id', $id)
+                                ->where('exercice_role.exercice_id', $id)
                                 ->get();
-            return view('permissions.show', compact('permission', 'roles'));
+            return view('exercices.show', compact('exercice', 'roles'));
         }else{
             return redirect()->route('backend.home');
         }
@@ -100,9 +104,9 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::user()->can('permissions.view')) {
-            $permission = Permission::where('id', $id)->first();
-            return view('backend.permissions.edit', compact('permission'));
+        if (Auth::user()->can('exercices.view')) {
+            $exercice = Exercice::where('id', $id)->first();
+            return view('backend.exercices.edit', compact('exercice'));
         }else{
             return redirect()->route('backend.home');
         }
@@ -117,17 +121,17 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::user()->can('permissions.view')) {
+        if (Auth::user()->can('exercices.view')) {
             $this->validate($request, [
-                'nom_permission'=>'required',
+                'nom_exercice'=>'required',
             ]);
 
-            $permission = Permission::where('id', $id)->first();
-            $permission->update([
-                'nom_permission'=>$request->nom_permission,
+            $exercice = Exercice::where('id', $id)->first();
+            $exercice->update([
+                'nom_exercice'=>$request->nom_exercice,
             ]);
 
-            return redirect()->route('permissions.index');
+            return redirect()->route('exercices.index');
         }
 
         return redirect()->route('backend.home');
@@ -146,11 +150,11 @@ class PermissionController extends Controller
 
     public function delete(Request $request)
     {
-        if (Auth::user()->can('permissions.delete')) {
+        if (Auth::user()->can('exercices.delete')) {
 
             $id = $request->id;
-            $permission = Permission::findOrFail($id);
-            $permission->update([
+            $exercice = exercice::findOrFail($id);
+            $exercice->update([
                 'is_delete' => 1,
             ]);
         }

@@ -17,7 +17,7 @@ class ValeurController extends Controller
      */
     public function __construct()
     {
-       // $this->middleware('auth:admin');
+       $this->middleware('auth');
     }
 
     /**
@@ -27,12 +27,16 @@ class ValeurController extends Controller
      */
     public function index()
     {
-        $valeurs = DB::table('valeurs')
+        if (Auth::user()->can('valeurs.view')) {
+            $valeurs = DB::table('valeurs')
                                 ->join('parametres', 'parametres.id', 'valeurs.id_parametre')
                                 ->select('valeurs.*', 'parametres.libelle as libelle_parametre')
                                 ->where('valeurs.is_delete', false)
                                 ->get();
             return view('valeurs.index', compact('valeurs'));
+        }else{
+            return redirect(route('app.home'));
+        }
     }
 
     /**
@@ -42,8 +46,13 @@ class ValeurController extends Controller
      */
     public function create()
     {
-        $parametres = Parametre::where('is_delete', false)->get();
-        return view('valeurs.create', compact('parametres'));
+        if (Auth::user()->can('valeurs.create')) {
+            $parametres = Parametre::where('is_delete', false)->get();
+            $valeurs = Valeur::where('is_delete', false)->get();
+        return view('valeurs.create', compact('parametres', 'valeurs'));
+        }else{
+            return redirect(route('app.home'));
+        }
     }
 
     /**
@@ -54,17 +63,22 @@ class ValeurController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'parametre_id'=>'required',
-            'nom_valeur'=>'required',
-        ]);
+        if (Auth::user()->can('valeurs.create')) {
+            $this->validate($request, [
+                'parametre_id'=>'required',
+                'nom_valeur'=>'required',
+            ]);
 
-        valeur::create([
-            'id_parametre'=>$request->parametre_id,
-            'libelle'=>$request->nom_valeur,
-        ]);
+            valeur::create([
+                'id_parametre'=>$request->parametre_id,
+                'id_parent'=>$request->id_parent,
+                'libelle'=>$request->nom_valeur,
+            ]);
 
-        return redirect()->route('valeurs.index');
+            return redirect()->route('valeurs.index');
+        }else{
+            return redirect(route('app.home'));
+        }
     }
 
     /**
@@ -92,9 +106,11 @@ class ValeurController extends Controller
     public function edit($id)
     {
         if (Auth::user()->can('valeurs.view')) {
-            $valeur = Valeur::where('id', $id)->first();
+            $valeurup = Valeur::where('id', $id)->first();
             $parametres = Parametre::where('is_delete', false)->get();
-            return view('valeurs.edit', compact('valeur', 'parametres'));
+            $valeurs = Valeur::where('is_delete', false)->get();
+            // dd($valeurup);
+            return view('valeurs.edit', compact('valeurup', 'parametres', 'valeurs'));
         }else{
             return redirect()->route('home');
         }
@@ -111,13 +127,14 @@ class ValeurController extends Controller
     {
         if (Auth::user()->can('valeurs.view')) {
             $this->validate($request, [
-                'id_param'=>'required',
+                'parametre_id'=>'required',
                 'nom_valeur'=>'required',
             ]);
 
             $valeur = Valeur::where('id', $id)->first();
             $valeur->update([
-                'id_param'=>$request->id_param,
+                'id_parametre'=>$request->parametre_id,
+                'id_parent'=>$request->id_parent,
                 'libelle'=>$request->nom_valeur,
             ]);
 

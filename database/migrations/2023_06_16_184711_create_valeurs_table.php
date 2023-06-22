@@ -16,6 +16,7 @@ class CreateValeursTable extends Migration
         Schema::create('valeurs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('id_parametre')->default(0);
+            $table->bigInteger('id_parent')->default(0);
             $table->string('libelle')->nullable();
             $table->text('description_valeur')->nullable();
             $table->bigInteger('id_user_created')->default(0);

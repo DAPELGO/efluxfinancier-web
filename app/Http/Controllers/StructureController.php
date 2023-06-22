@@ -4,9 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Structure;
+use App\Models\Valeur;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StructureController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +28,11 @@ class StructureController extends Controller
     public function index()
     {
         $structures = Structure::where('is_delete', false)->get();
+        $structures = DB::table('structures')
+                                ->join('valeurs', 'valeurs.id', 'structures.id_typestructure')
+                                ->select('structures.*', 'valeurs.libelle as libelle_type')
+                                ->where('structures.is_delete', FALSE)
+                                ->get();
         return view('structures.index', compact('structures'));
     }
 
@@ -25,8 +43,8 @@ class StructureController extends Controller
      */
     public function create()
     {
-        $structures = Structure::where('is_delete', false)->get();
-        return view('structures.create', compact('structures'));
+        $valeurs = Valeur::where(['id_parametre'=>env('TYPESTRUCTURE'), 'is_delete'=>FALSE])->get();
+        return view('structures.create', compact('valeurs'));
     }
 
     /**
@@ -46,6 +64,7 @@ class StructureController extends Controller
             $parent_id = $request->paraent_id;
         }
         Structure::create([
+            'id_typestructure'=>$request->id_typestructure,
             'parent_id'=>$parent_id,
             'nom_structure'=>$request->nom_structure,
             'description_structure'=>$request->description_structure,

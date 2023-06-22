@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::resource('livres', 'App\Policies\LivrePolicy');
-        Gate::resource('creance-dettes', 'App\Policies\CreanceDettePolicy');
+        Gate::resource('creancedettes', 'App\Policies\CreanceDettePolicy');
         Gate::resource('paiements', 'App\Policies\PaiementPolicy');
         Gate::resource('structures', 'App\Policies\StructurePolicy');
         Gate::resource('users', 'App\Policies\UserPolicy');
@@ -34,5 +34,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::resource('permissions', 'App\Policies\PermissionPolicy');
         Gate::resource('parametres', 'App\Policies\ParametrePolicy');
         Gate::resource('valeurs', 'App\Policies\ValeurPolicy');
+        Gate::resource('exercices', 'App\Policies\ExercicePolicy');
     }
 }

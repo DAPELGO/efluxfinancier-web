@@ -10,15 +10,15 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Phoenix</title>
+    <title>eFLUX FINANCIER</title>
 
 
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
-    <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../../assets/img/favicons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/icons/armoirie-bf.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/icons/armoirie-bf.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/icons/armoirie-bf.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="../../../assets/img/favicons/favicon.ico">
     <link rel="manifest" href="../../../assets/img/favicons/manifest.json">
     <meta name="msapplication-TileImage" content="../../../assets/img/favicons/mstile-150x150.png">
@@ -81,25 +81,26 @@
                       <!--/.bg-holder-->
 
                       <div class="position-relative px-4 px-lg-7 pt-7 pb-7 pb-sm-5 text-center text-md-start pb-lg-7 pb-md-7">
-                        <h3 class="mb-3 text-black fs-1">Phoenix Authentication</h3>
-                        <p class="text-700">Give yourself some hassle-free development process with the uniqueness of Phoenix!</p>
+                        <h3 class="mb-3 text-black fs-1">eFLUX FINANCIER</h3>
+                        <p class="text-700">eFlux Financier permet la gestion des livres de trésorerie et le suivi des créances et dettes des CSPS et CMA.</p>
                         <ul class="list-unstyled mb-0 w-max-content w-md-auto mx-auto">
-                          <li class="d-flex align-items-center"><span class="uil uil-check-circle text-success me-2"></span><span class="text-700 fw-semi-bold">Fast</span></li>
-                          <li class="d-flex align-items-center"><span class="uil uil-check-circle text-success me-2"></span><span class="text-700 fw-semi-bold">Simple</span></li>
-                          <li class="d-flex align-items-center"><span class="uil uil-check-circle text-success me-2"></span><span class="text-700 fw-semi-bold">Responsive</span></li>
+                          <li class="d-flex align-items-center"><span class="uil uil-check-circle text-success me-2"></span><span class="text-700 fw-semi-bold">Livres de trésorerie</span></li>
+                          <li class="d-flex align-items-center"><span class="uil uil-check-circle text-success me-2"></span><span class="text-700 fw-semi-bold">Créances et dettes</span></li>
+                          <li class="d-flex align-items-center"><span class="uil uil-check-circle text-success me-2"></span><span class="text-700 fw-semi-bold">Paiement</span></li>
                         </ul>
                       </div>
-                      <div class="position-relative z-index--1 mb-6 d-none d-md-block text-center mt-md-15"><img class="auth-title-box-img d-dark-none" src="../../../assets/img/spot-illustrations/auth.png" alt="" /><img class="auth-title-box-img d-light-none" src="../../../assets/img/spot-illustrations/auth-dark.png" alt="" /></div>
+                      <div class="position-relative z-index--1 mb-6 d-none d-md-block text-center mt-md-15"><img class="auth-title-box-img d-dark-none" src="../../../assets/img/spot-illustrations/15.png" alt="" /><img class="auth-title-box-img d-light-none" src="../../../assets/img/spot-illustrations/auth-dark.png" alt="" /></div>
                     </div>
                     <div class="col mx-auto">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="auth-form-box">
                                 <div class="text-center mb-7"><a class="d-flex flex-center text-decoration-none mb-4" href="../../../index.html">
-                                    <div class="d-flex align-items-center fw-bolder fs-5 d-inline-block"><img src="../../../assets/img/icons/logo.png" alt="phoenix" width="58" />
+                                    <div class="d-flex align-items-center fw-bolder fs-5 d-inline-block"><img src="{{ asset('assets/img/icons/armoirie-bf.png') }}" alt="MSHP" width="58" />
                                     </div>
                                 </a>
-                                <h3 class="text-1000">Connexion admin</h3>
+                                <h3 class="text-1000">Espace de connexion</h3>
+                                <p class="text-700">Se connecter à votre profil.</p>
                                 </div>
                                 @if(Session::has('error'))
                                     <div class="alert alert-soft-warning" role="alert">{{ session::get('error') }}</div>
@@ -109,28 +110,27 @@
                                 <div class="divider-content-center bg-white">Entrer email et mot de passe</div>
                                 </div>
                                 <div class="mb-3 text-start">
-                                <label class="form-label" for="email">Email address</label>
+                                <label class="form-label" for="email">Addresse Email</label>
                                 <div class="form-icon-container">
                                     <input class="form-control form-icon-input" name="email" id="email" type="email" placeholder="name@example.com" /><span class="fas fa-user text-900 fs--1 form-icon"></span>
                                 </div>
                                 </div>
                                 <div class="mb-3 text-start">
-                                <label class="form-label" for="password">Password</label>
+                                <label class="form-label" for="password">Mot de Passe</label>
                                 <div class="form-icon-container">
-                                    <input class="form-control form-icon-input" name="password" id="password" type="password" placeholder="Password" /><span class="fas fa-key text-900 fs--1 form-icon"></span>
+                                    <input class="form-control form-icon-input" name="password" id="password" type="password" placeholder="********" /><span class="fas fa-key text-900 fs--1 form-icon"></span>
                                 </div>
                                 </div>
                                 <div class="row flex-between-center mb-7">
                                 <div class="col-auto">
                                     <div class="form-check mb-0">
                                     <input class="form-check-input" id="basic-checkbox" type="checkbox" checked="checked" />
-                                    <label class="form-check-label mb-0" for="basic-checkbox">Remember me</label>
+                                    <label class="form-check-label mb-0" for="basic-checkbox">Se souvenir de moi ?</label>
                                     </div>
                                 </div>
-                                <div class="col-auto"><a class="fs--1 fw-semi-bold" href="../../../pages/authentication/card/forgot-password.html">Forgot Password?</a></div>
+                                <div class="col-auto"><a class="fs--1 fw-semi-bold" href="../../../pages/authentication/card/forgot-password.html">Mot de passe oublié?</a></div>
                                 </div>
-                                <button class="btn btn-primary w-100 mb-3" type="submit">Sign In</button>
-                                <div class="text-center"><a class="fs--1 fw-bold" href="../../../pages/authentication/card/sign-up.html">Create an account</a></div>
+                                <button class="btn btn-primary w-100 mb-3" type="submit">Se connecter</button>
                             </div>
                         </form>
                     </div>

@@ -17,7 +17,7 @@ class RoleController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth:admin');
+        $this->middleware('auth');
     }
 
     /**
@@ -27,7 +27,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->can('role.view')) {
+        if (Auth::user()->can('roles.view')) {
             $roles = Role::where('is_delete', FALSE)->get();
             return view('roles.index', compact('roles'));
         }else{
@@ -42,7 +42,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->can('role.create')) {
+        if (Auth::user()->can('roles.create')) {
             $permissions =  Permission::where('is_delete', FALSE)->get();
             return view('roles.create', compact('permissions'));
         }else{
@@ -58,7 +58,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->can('role.create')) {
+        if (Auth::user()->can('roles.create')) {
             $this->validate($request, [
                 'nom_role' => 'required|unique:roles',
                 'permission' => 'required',
@@ -66,6 +66,7 @@ class RoleController extends Controller
 
             $role = Role::create([
                 'nom_role' => $request->nom_role,
+                'id_user_created'=>Auth::user()->id,
                 'is_delete' => FALSE,
             ]);
 
@@ -89,7 +90,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        if (Auth::user()->can('roles.view')) {
+        if (Auth::user()->can('roless.view')) {
 
             $role = Role::find($id);
             $users = DB::table('admins')
@@ -120,7 +121,7 @@ class RoleController extends Controller
 
             $role = Role::find($id);
             $permissions =  Permission::where('is_delete', FALSE)->get();
-            return view('backend.roles.edit', compact('role', 'permissions'));
+            return view('roles.edit', compact('role', 'permissions'));
         }
 
         return redirect(route('backend.home'));
@@ -144,7 +145,7 @@ class RoleController extends Controller
             $role = Role::find($id);
             $role->update([
                 'nom_role' =>$request->nom_role,
-                'id_user_modified'=>Auth::user()->id,
+                'id_user_updated'=>Auth::user()->id,
             ]);
 
             $role->permissions()->sync($request->permission);
@@ -177,6 +178,7 @@ class RoleController extends Controller
             $id = $request->id;
             $role = Role::findOrFail($id);
             $role->update([
+                'id_user_deleted'=>Auth::user()->id,
                 'is_delete' => 1,
             ]);
 

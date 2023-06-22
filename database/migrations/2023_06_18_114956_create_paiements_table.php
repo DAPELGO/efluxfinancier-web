@@ -16,6 +16,7 @@ class CreatePaiementsTable extends Migration
         Schema::create('paiements', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('creance_dette_id')->default(0);
+            $table->double('montant_verse')->default(0);
             $table->double('somme_versee')->default(0);
             $table->double('somme_restante')->default(0);
             $table->date('date_paiement')->nullable();

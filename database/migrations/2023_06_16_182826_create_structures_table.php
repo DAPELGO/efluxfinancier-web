@@ -15,6 +15,7 @@ class CreateStructuresTable extends Migration
     {
         Schema::create('structures', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('id_typestructure')->default(0);
             $table->bigInteger('parent_id')->default(0);
             $table->string('nom_structure');
             $table->text('description_structure')->nullable();

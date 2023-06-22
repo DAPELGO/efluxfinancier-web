@@ -16,8 +16,8 @@
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
-    <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/icons/armoirie-bf.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/icons/armoirie-bf.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="../../../assets/img/favicons/favicon-16x16.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../assets/img/favicons/favicon.ico">
     <link rel="manifest" href="../../../assets/img/favicons/manifest.json">
@@ -76,160 +76,17 @@
             }
           </script>
           @include('layouts.nav')
-          <div class="navbar-vertical-footer">
-            <button class="btn navbar-vertical-toggle border-0 fw-semi-bold w-100 white-space-nowrap d-flex align-items-center"><span class="uil uil-left-arrow-to-left fs-0"></span><span class="uil uil-arrow-from-right fs-0"></span><span class="navbar-vertical-footer-text ms-2">Collapsed View</span></button>
-          </div>
         </nav>
         @include('layouts.header')
-        <div class="modal fade" id="searchBoxModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="true" data-phoenix-modal="data-phoenix-modal" style="--phoenix-backdrop-opacity: 1;">
-          <div class="modal-dialog">
-            <div class="modal-content mt-15 rounded-pill">
-              <div class="modal-body p-0">
-                <div class="search-box navbar-top-search-box" data-list='{"valueNames":["title"]}' style="width: auto;">
-                  <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
-                    <input class="form-control search-input fuzzy-search rounded-pill form-control-lg" type="search" placeholder="Search..." aria-label="Search" />
-                    <span class="fas fa-search search-box-icon"></span>
-
-                  </form>
-                  <div class="btn-close position-absolute end-0 top-50 translate-middle cursor-pointer shadow-none" data-bs-dismiss="search">
-                    <button class="btn btn-link btn-close-falcon p-0" aria-label="Close"></button>
-                  </div>
-                  <div class="dropdown-menu border border-300 font-base start-0 py-0 overflow-hidden w-100">
-                    <div class="scrollbar-overlay" style="max-height: 30rem;">
-                      <div class="list pb-3">
-                        <h6 class="dropdown-header text-1000 fs--2 py-2">24 <span class="text-500">results</span></h6>
-                        <hr class="text-200 my-0" />
-                        <h6 class="dropdown-header text-1000 fs--1 border-bottom border-200 py-2 lh-sm">Recently Searched </h6>
-                        <div class="py-2"><a class="dropdown-item" href="../../../apps/e-commerce/landing/product-details.html">
-                            <div class="d-flex align-items-center">
-
-                              <div class="fw-normal text-1000 title"><span class="fa-solid fa-clock-rotate-left" data-fa-transform="shrink-2"></span> Store Macbook</div>
-                            </div>
-                          </a>
-                          <a class="dropdown-item" href="../../../apps/e-commerce/landing/product-details.html">
-                            <div class="d-flex align-items-center">
-
-                              <div class="fw-normal text-1000 title"> <span class="fa-solid fa-clock-rotate-left" data-fa-transform="shrink-2"></span> MacBook Air - 13″</div>
-                            </div>
-                          </a>
-
-                        </div>
-                        <hr class="text-200 my-0" />
-                        <h6 class="dropdown-header text-1000 fs--1 border-bottom border-200 py-2 lh-sm">Products</h6>
-                        <div class="py-2"><a class="dropdown-item py-2 d-flex align-items-center" href="../../../apps/e-commerce/landing/product-details.html">
-                            <div class="file-thumbnail me-2"><img class="h-100 w-100 fit-cover rounded-3" src="../../../assets/img/products/60x60/3.png" alt="" /></div>
-                            <div class="flex-1">
-                              <h6 class="mb-0 text-1000 title">MacBook Air - 13″</h6>
-                              <p class="fs--2 mb-0 d-flex text-700"><span class="fw-medium text-600">8GB Memory - 1.6GHz - 128GB Storage</span></p>
-                            </div>
-                          </a>
-                          <a class="dropdown-item py-2 d-flex align-items-center" href="../../../apps/e-commerce/landing/product-details.html">
-                            <div class="file-thumbnail me-2"><img class="img-fluid" src="../../../assets/img/products/60x60/3.png" alt="" /></div>
-                            <div class="flex-1">
-                              <h6 class="mb-0 text-1000 title">MacBook Pro - 13″</h6>
-                              <p class="fs--2 mb-0 d-flex text-700"><span class="fw-medium text-600 ms-2">30 Sep at 12:30 PM</span></p>
-                            </div>
-                          </a>
-
-                        </div>
-                        <hr class="text-200 my-0" />
-                        <h6 class="dropdown-header text-1000 fs--1 border-bottom border-200 py-2 lh-sm">Quick Links</h6>
-                        <div class="py-2"><a class="dropdown-item" href="../../../apps/e-commerce/landing/product-details.html">
-                            <div class="d-flex align-items-center">
-
-                              <div class="fw-normal text-1000 title"><span class="fa-solid fa-link text-900" data-fa-transform="shrink-2"></span> Support MacBook House</div>
-                            </div>
-                          </a>
-                          <a class="dropdown-item" href="../../../apps/e-commerce/landing/product-details.html">
-                            <div class="d-flex align-items-center">
-
-                              <div class="fw-normal text-1000 title"> <span class="fa-solid fa-link text-900" data-fa-transform="shrink-2"></span> Store MacBook″</div>
-                            </div>
-                          </a>
-
-                        </div>
-                        <hr class="text-200 my-0" />
-                        <h6 class="dropdown-header text-1000 fs--1 border-bottom border-200 py-2 lh-sm">Files</h6>
-                        <div class="py-2"><a class="dropdown-item" href="../../../apps/e-commerce/landing/product-details.html">
-                            <div class="d-flex align-items-center">
-
-                              <div class="fw-normal text-1000 title"><span class="fa-solid fa-file-zipper text-900" data-fa-transform="shrink-2"></span> Library MacBook folder.rar</div>
-                            </div>
-                          </a>
-                          <a class="dropdown-item" href="../../../apps/e-commerce/landing/product-details.html">
-                            <div class="d-flex align-items-center">
-
-                              <div class="fw-normal text-1000 title"> <span class="fa-solid fa-file-lines text-900" data-fa-transform="shrink-2"></span> Feature MacBook extensions.txt</div>
-                            </div>
-                          </a>
-                          <a class="dropdown-item" href="../../../apps/e-commerce/landing/product-details.html">
-                            <div class="d-flex align-items-center">
-
-                              <div class="fw-normal text-1000 title"> <span class="fa-solid fa-image text-900" data-fa-transform="shrink-2"></span> MacBook Pro_13.jpg</div>
-                            </div>
-                          </a>
-
-                        </div>
-                        <hr class="text-200 my-0" />
-                        <h6 class="dropdown-header text-1000 fs--1 border-bottom border-200 py-2 lh-sm">Members</h6>
-                        <div class="py-2"><a class="dropdown-item py-2 d-flex align-items-center" href="../../../pages/members.html">
-                            <div class="avatar avatar-l status-online  me-2 text-900">
-                              <img class="rounded-circle " src="../../../assets/img/team/40x40/10.webp" alt="" />
-
-                            </div>
-                            <div class="flex-1">
-                              <h6 class="mb-0 text-1000 title">Carry Anna</h6>
-                              <p class="fs--2 mb-0 d-flex text-700">anna@technext.it</p>
-                            </div>
-                          </a>
-                          <a class="dropdown-item py-2 d-flex align-items-center" href="../../../pages/members.html">
-                            <div class="avatar avatar-l  me-2 text-900">
-                              <img class="rounded-circle " src="../../../assets/img/team/40x40/12.webp" alt="" />
-
-                            </div>
-                            <div class="flex-1">
-                              <h6 class="mb-0 text-1000 title">John Smith</h6>
-                              <p class="fs--2 mb-0 d-flex text-700">smith@technext.it</p>
-                            </div>
-                          </a>
-
-                        </div>
-                        <hr class="text-200 my-0" />
-                        <h6 class="dropdown-header text-1000 fs--1 border-bottom border-200 py-2 lh-sm">Related Searches</h6>
-                        <div class="py-2"><a class="dropdown-item" href="../../../apps/e-commerce/landing/product-details.html">
-                            <div class="d-flex align-items-center">
-
-                              <div class="fw-normal text-1000 title"><span class="fa-brands fa-firefox-browser text-900" data-fa-transform="shrink-2"></span> Search in the Web MacBook</div>
-                            </div>
-                          </a>
-                          <a class="dropdown-item" href="../../../apps/e-commerce/landing/product-details.html">
-                            <div class="d-flex align-items-center">
-
-                              <div class="fw-normal text-1000 title"> <span class="fa-brands fa-chrome text-900" data-fa-transform="shrink-2"></span> Store MacBook″</div>
-                            </div>
-                          </a>
-
-                        </div>
-                      </div>
-                      <div class="text-center">
-                        <p class="fallback fw-bold fs-1 d-none">No Result Found.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="content">
+        <div class="content bg-white" style="padding-top: 3.2rem;">
           @yield('content')
           <footer class="footer position-absolute">
             <div class="row g-0 justify-content-between align-items-center h-100">
               <div class="col-12 col-sm-auto text-center">
-                <p class="mb-0 mt-2 mt-sm-0 text-900"><small> Tous droits reservés<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none" />2023 &copy;<a class="mx-1" href="https://themewagon.com">EFLUX</a></small></p>
+                <p class="mb-0 mt-2 mt-sm-0 text-900"><small> Tous droits reservés<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none" />2023 &copy;<a class="mx-1" href="#">EFLUX FINANCIER</a> Ministère de la santé et de l'hygiène publique. BF</small></p>
               </div>
               <div class="col-12 col-sm-auto text-center">
-                <p class="mb-0 text-600">v1.0.0</p>
+                <p class="mb-0 text-600"><small class="text-700">v1.0</small></p>
               </div>
             </div>
           </footer>
@@ -279,8 +136,9 @@
             };
             });
 
-
     </script>
+
+
 
     <!-- ===============================================-->
     <!--    JavaScripts-->
@@ -299,5 +157,96 @@
     <script src="../../../vendors/dropzone/dropzone.min.js"></script>
     <script src="../../../vendors/choices/choices.min.js"></script>
     <script src="../../../assets/js/phoenix.js"></script>
+    <script src="../../../vendors/echarts/echarts.min.js"></script>
+    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARdVcREeBK44lIWnv5-iPijKqvlSAVwbw&callback=revenueMapInit" async></script>
+    <script src="../../../assets/js/ecommerce-dashboard.js"></script>
+    <script src="../../../assets/js/jquery/jquery.min.js"></script>
+
+    <script>
+        $(function(){
+            $("#montant_livre").keyup(function(event) {
+                var montant_livre = $("#montant_livre").val();
+                var solde_actuel_banque = $("#solde_actuel_banque").val();
+                var solde_actuel_caisse = $("#solde_actuel_caisse").val();
+            });
+
+            // CHANGE CREANCE DETTE
+            $("#id_type_creancedette").change(function(){
+                var id_type_creancedette = $(this).val();
+
+                if(id_type_creancedette == {{ env('IDTYPECREANCE') }}){
+                    $("#type_creancedette").val("Creance");
+                    $("#val_id_type_dette").hide();
+                    $("#val_id_type_creance").show();
+                }else if(id_type_creancedette == {{ env('IDTYPEDETTE') }}){
+                    $("#type_creancedette").val("Dette");
+                    $("#val_id_type_creance").hide();
+                    $("#val_id_type_dette").show();
+                }
+            });
+
+            // CHANGE OPERATION ACTION
+            $("#id_type_operation").change(function(){
+                var id_type_operation = $(this).val();
+
+                if(id_type_operation == {{ env('IDTYPEOPERATIONDE') }}){
+                    $("#action_livre").val("Dépense");
+                    $("#disabled_action").val('Dépense');
+                }else if(id_type_operation == {{ env('IDTYPEOPERATIONRE') }}){
+                    $("#action_livre").val("Recettes");
+                    $("#disabled_action").val('Recettes');
+                }else if(id_type_operation == {{ env('IDTYPEOPERATIONMI') }}){
+                    $("#action_livre").val("Mouvement interne");
+                    $("#disabled_action").val('Mouvement interne');
+                }
+            });
+        });
+
+        /************ BEGIN SELECT CHARGEMENT SOUS TABLES **************************/
+            // Région
+            function changeValue(parent, child, table_item)
+            {
+                // alert(0);
+                var idparent_val = $("#"+parent).val();
+                // alert(idparent_val);
+                var table = table_item;
+
+                var url = '{{ route('root.selection') }}';
+
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    data: {idparent_val: idparent_val, table:table},
+                    dataType: 'json',
+                    error:function(data){alert("Erreur");},
+                    success: function (data) {
+                        var data = data.data;
+                        if(table == 'langue') {
+                            var content = '';
+                            for (var x = 0; x < data.length; x++) {
+                                if(data[x]['id'] !='') {
+                                    content += '<div class="radio-custom radio-primary"><input type="radio" id="'+data[x]['id']+'" name="langue[]" value="'+data[x]['id']+'"><label class="no-fw" for="'+data[x]['id']+'">'+data[x]['name']+'</label></div>';
+                                }
+                            }
+
+                            $('#'+child).html(content);
+
+                        }else{
+                            var options = '<option value="" selected>--- Choisir une valeur </option>';
+                            for (var x = 0; x < data.length; x++) {
+                                if(data[x]['id'] !='') {
+                                    options += '<option value="' + data[x]['id'] + '">' + data[x]['name'] + '</option>';
+                                }
+                            }
+                            $('#'+child).html(options);
+                        }
+
+                    }
+                });
+            }
+        /************ END SELECT CHARGEMENT SOUS TABLES **************************/
+    </script>
+
   </body>
 </html>

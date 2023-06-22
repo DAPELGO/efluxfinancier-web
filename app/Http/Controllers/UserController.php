@@ -4,16 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Models\Role;
-use App\Models\Models\Region;
-use App\Models\Models\Province;
-use App\Models\Models\Commune;
-use App\Models\Models\Arrondissement;
-use App\Models\Models\Valeur;
-use App\Models\Models\Volontaire;
-use App\Models\Models\Piecejointe;
-use App\Models\Models\Typeactivite;
-use App\Models\Models\Domaine;
+use App\Models\Role;
+use App\Models\Structure;
+use App\Models\Valeur;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -38,9 +31,14 @@ class UserController extends Controller
     {
         if (Auth::user()->can('users.view')) {
             $users = User::where('is_delete', FALSE)->get();
-            return view('backend.users.index', compact("users"));
+            $users = DB::table('users')
+                                ->join('structures', 'structures.id', 'users.structure_id')
+                                ->select('users.*', 'structures.nom_structure')
+                                ->where('users.is_delete', FALSE)
+                                ->get();
+            return view('users.index', compact("users"));
         }else{
-            return redirect(route('backend.home'));
+            return redirect(route('app.home'));
         }
     }
 
@@ -54,10 +52,12 @@ class UserController extends Controller
         if (Auth::user()->can('users.create')) {
 
             $roles = Role::where('is_delete', FALSE)->get();
-            return view('backend.users.create', compact('roles'));
+            $valeurs = Valeur::where('id', env('TYPESTRUCTURE_CSPS'))->orWhere('id', env('TYPESTRUCTURE_CMA'))->get();
+            // $valeurs = $valeurs->where('id_parametre', env('TYPESTRUCTURE'))->orWhere()->get();
+            return view('users.create', compact('roles', 'valeurs'));
         }
 
-        return redirect(route('backend.home'));
+        return redirect(route('app.home'));
     }
 
     /**
@@ -74,12 +74,13 @@ class UserController extends Controller
             $this->validate($request, [
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                // 'phone_number' => 'required|numeric',
                 'password' => 'required|string|min:6',
+                'structure_id' => 'required',
+                'role' => 'required',
             ]);
 
             // Check "statut"
-            /*switch ($request->statut) {
+            switch ($request->statut) {
                 case 1:
                     $status = $request->statut;
                     break;
@@ -89,22 +90,11 @@ class UserController extends Controller
                     break;
             }
 
-            // Check "profile"
-            switch ($request->profile_user) {
-                case 1:
-                    $profile_user = $request->profile_user;
-                    $id_region = $request->id_region;
-                    break;
-
-                default:
-                    $profile_user = 0;
-                    $id_region = 0;
-                    break;
-            }*/
-
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'structure_id' => $request->structure_id,
+                'statut' => $status,
                 'password' => bcrypt($request->password),
             ]);
 
@@ -117,7 +107,7 @@ class UserController extends Controller
             return redirect()->route('users.index');
         }
 
-        return redirect(route('backend.home'));
+        return redirect(route('app.home'));
     }
 
     /**
@@ -131,10 +121,10 @@ class UserController extends Controller
         if (Auth::user()->can('users.view')) {
             $user = User::find($id);
             $roles =  Role::where('is_delete', FALSE)->get();
-            return view('backend.users.show', compact('user', 'roles'));
+            return view('users.show', compact('user', 'roles'));
         }
 
-        return redirect(route('backend.home'));
+        return redirect(route('app.home'));
     }
 
     /**
@@ -148,10 +138,10 @@ class UserController extends Controller
         if (Auth::user()->can('users.update')) {
             $user = User::find($id);
             $roles =  Role::where('is_delete', FALSE)->get();
-            return view('backend.users.edit', compact('user', 'roles'));
+            return view('users.edit', compact('user', 'roles'));
         }
 
-        return redirect(route('backend.home'));
+        return redirect(route('app.home'));
     }
 
     /**
@@ -219,7 +209,7 @@ class UserController extends Controller
             return redirect(route('users.index'));
         }
 
-        return redirect(route('backend.home'));
+        return redirect(route('app.home'));
     }
 
     /**
@@ -278,10 +268,10 @@ class UserController extends Controller
         if (Auth::user()->can('profile')) {
             $user = User::where('email', Auth::user()->email)->first();
             $roles =  Role::where('is_delete', FALSE)->get();
-            return view('backend.users.profile', compact('user', 'roles'));
+            return view('users.profile', compact('user', 'roles'));
         }
 
-        return redirect(route('backend.home'));
+        return redirect(route('app.home'));
     }
 
     /**
@@ -297,7 +287,7 @@ class UserController extends Controller
                     ->select('users.*', 'volontaires.*', 'view_liste_inscription.libelle_profession')
                     ->where(['view_liste_inscription.is_valide'=>TRUE, 'users.id'=>Auth::user()->id])
                     ->first();
-       
+
         $formation = DB::table('formations')
                         ->join('formation_session', 'formation_session.formation_id', '=', 'formations.id')
                         ->join('session_user', 'session_user.session_id', '=', 'formation_session.session_id')
@@ -318,7 +308,7 @@ class UserController extends Controller
                         ->select('communes.libelle as commune', 'provinces.libelle as province', 'regions.libelle as region')
                         ->where('communes.id',  $profile->id_commune)
                         ->get();
-        
+
         $nombreformation = DB::table('formations')
                         ->join('formation_session', 'formation_session.formation_id', '=', 'formations.id')
                         ->join('session_user', 'session_user.session_id', '=', 'formation_session.session_id')
@@ -338,8 +328,8 @@ class UserController extends Controller
         $domaineetude = DB::table('valeurs')
                     ->select('valeurs.libelle')
                     ->where('valeurs.id',  $profile->domaine_etude)
-                    ->get();     
-                    
+                    ->get();
+
         return view('frontend.user.profile', compact('profile', 'formation', 'activite', 'piececv', 'pieceats', 'piecedocs','nombreformation','nombreactivite','nombremission', 'localisation','domaineetude'));
 
     }
@@ -585,7 +575,7 @@ class UserController extends Controller
         DB::table('valeur_volontaire')->where(['volontaire_id'=>$volontaire->id, 'type_table'=>'typeactivite'])->delete();
         DB::table('valeur_volontaire')->where(['volontaire_id'=>$volontaire->id, 'type_table'=>'domaine'])->delete();
         DB::table('valeur_volontaire')->where(['volontaire_id'=>$volontaire->id, 'type_table'=>'typeformation'])->delete();
-        
+
         for($i = 0; $i<count($langue); $i++){
             DB::insert('insert into valeur_volontaire (volontaire_id, valeur_id, type_table) values (?, ?, ?)', [$volontaire->id, $langue[$i], 'langue']);
         }
